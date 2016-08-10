@@ -1,0 +1,11 @@
+{
+  "name": "aselloclientapi",
+  "version": "1.0.0",
+  "description": "library to control asello within an iframe",
+  "main": "example.js",
+  "scripts": {
+    "start": "node node_modules/http-server/bin/http-server"
+  },
+  "author": "Richard Liebmann <rl@asello.at>",
+  "license": "MIT"
+}

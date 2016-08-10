@@ -1,0 +1,24 @@
+{
+  "name": "aselloClientApi",
+  "authors": [
+    "Richard Liebmann <rl@asello.at>"
+  ],
+  "description": "library to control asello within an iframe",
+  "main": "example.html",
+  "keywords": [
+    "asello",
+    "clientapi"
+  ],
+  "license": "MIT",
+  "homepage": "asello.at",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "porthole": "https://github.com/ternarylabs/porthole.git"
+  }
+}
