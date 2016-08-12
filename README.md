@@ -5,18 +5,19 @@ More information about asello and the asello clientapi could be found on our web
 
 # Getting started
 
-1. Create an iframe in your web application.
-2. Create an asello client with the iframe query.
+1) Create an iframe in your web application.
+
+2) Create an asello client with the iframe query.
 
 ```javascript
 var api = new AselloClientAPIClient("#aselloframe", "https://kassa.asello.at")
 ```
 
-3. Get an access token from the webserver
+3) Get an access token from the webserver
 
 OAuth Token Endpoint: `https://kassa.asello.at/token`
 
-4. Call the asello client api
+4) Call the asello client api
 
 ```javascript
 
