@@ -6,7 +6,7 @@ More information about asello and the asello clientapi could be found on our web
 # Getting started
 
 ```javascript
-var api = new AselloClientAPIClient("#aselloframe", "http://localhost:50306")
+var api = new AselloClientAPIClient("#aselloframe", "https://kassa.asello.at")
 ```
 
 # Start the sample

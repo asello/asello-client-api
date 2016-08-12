@@ -101,7 +101,7 @@ select.addEventListener("change", selectionChanged);
 
 selectionChanged();
 
-var api = new AselloClientAPIClient("#aselloframe", "http://kassa,asello.at:50306")
+var api = new AselloClientAPIClient("#aselloframe", "https://kassa,asello.at:50306")
 
 function exec() {
     var val = editor.getValue();    
