@@ -51,3 +51,7 @@ npm start
 ```
 
 Start a webbrowser to `http://localhost:8080`
+
+# Open existing invoice in asello
+
+https://kassa.asello.at/#/invoice/detail/<invoice_id>
