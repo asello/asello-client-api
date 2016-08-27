@@ -57,8 +57,13 @@
 
         var iframe = document.querySelector(_iframequery);
 
-        if(iframe)
-            iframe.src = url;
+        if(iframe) {
+			iframe.src = "";
+
+			setTimeout(function() {
+				iframe.src = url;
+			}, 100);
+		}
 
         this.callback = {
             options: options,
@@ -102,6 +107,44 @@
             this.updateIFrame(options, callback);
         }
     }
+	AselloClientAPIClient.prototype.openDetailsInternal = function(options) {
+		var access_token = options.access_token;
+		var number = options.number;
+		
+		var url = _rootUrl + "/#/invoice/detail/" + number
+		
+		if (access_token) {
+            url +=  "?access_token=" + access_token;
+        }
+		
+		var iframe = document.querySelector(_iframequery);
+
+		if(iframe) {
+			iframe.src = "";
+
+			setTimeout(function() {
+				iframe.src = url;
+			}, 100);
+		}
+	}
+	AselloClientAPIClient.prototype.openDetails = function(options) {
+		var _this = this;
+		
+		if(!options)
+			return;
+		
+		if(!options.access_token && options.user && options.password) {
+            getToken(options.user, options.password, function(err, access_token) {
+                options.access_token = access_token;
+
+                 _this.openDetailsInternal(options);
+            });
+        }
+        else {
+            this.openDetailsInternal(options);
+        }
+	}
+	
 
     window.AselloClientAPIClient = AselloClientAPIClient;
 })(window);

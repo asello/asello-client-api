@@ -1,3 +1,5 @@
+var serverurl = "https://kassa.asello.at";
+
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
 // editor.getSession().setMode("ace/mode/javascript");
@@ -88,6 +90,26 @@ var actionSelect = document.querySelector(".main .left .left-header select.actio
 var iframe = document.querySelector(".main .right iframe");
 var userInput = document.querySelector("#userName");
 var passwordInput = document.querySelector("#password");
+var rnrtxt = document.querySelector("#rnrtxt");
+
+if(window.localStorage != null) {
+	var obj = window.localStorage.getItem("demo-settings");
+	
+	if(obj) {
+		try {
+			obj = JSON.parse(obj);
+			
+			userInput.value = obj.user;
+			passwordInput.value = obj.password;
+			actionSelect.value = obj.action;
+			rnrtxt.value = obj.number;
+		}
+		catch(err) {
+			
+			
+		}
+	}
+}
 
 function selectionChanged() {
     var template = window[select.value];
@@ -101,9 +123,37 @@ select.addEventListener("change", selectionChanged);
 
 selectionChanged();
 
-var api = new AselloClientAPIClient("#aselloframe", "https://kassa,asello.at")
+var api = new AselloClientAPIClient("#aselloframe", serverurl)
+
+function opendetail() {
+	window.localStorage.setItem("demo-settings", JSON.stringify({
+		user: userInput.value,
+		password: passwordInput.value,
+		action: actionSelect.value,
+		number: rnrtxt.value
+	}));
+	
+	var nr = rnrtxt.value;
+	
+	if(nr == null || nr == "")
+		return;
+	
+	api.openDetails({
+		access_token: null,
+        user: userInput.value,
+        password: passwordInput.value,
+		number: nr
+	});
+}
 
 function exec() {
+	window.localStorage.setItem("demo-settings", JSON.stringify({
+		user: userInput.value,
+		password: passwordInput.value,
+		action: actionSelect.value,
+		number: rnrtxt.value
+	}));
+	
     var val = editor.getValue();    
     var obj = null;
 
@@ -123,6 +173,6 @@ function exec() {
         action: actionSelect.value,
         data: obj
     }, function(result) {
-        alert("The invoice number is '" + result.number + "'")
+        alert("The invoice number is '" + result.number + "' with id " + result.id)
     });
 }
