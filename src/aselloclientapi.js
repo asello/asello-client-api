@@ -32,7 +32,12 @@
         });
         request.send("userName=" + encodeURIComponent(user) + "&password=" + encodeURIComponent(password) + "&grant_type=password");
     }
-
+	var b64EncodeUnicode = function (str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function (match, p1) {
+            return String.fromCharCode('0x' + p1);
+        }));
+    }
+	
     function AselloClientAPIClient(iframequery, aselloUrl) {
         var _this = this;
 
@@ -78,7 +83,7 @@
 		var printer = options.printer;
 
         var str = JSON.stringify(data);
-        var strb64 = btoa(str);
+        var strb64 = b64EncodeUnicode(str);
 
         var url = _rootUrl + "/#/create?eventdestination=" + encodeURIComponent(location.protocol + "//" + location.host) + "&data=" + strb64;
 
