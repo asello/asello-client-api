@@ -23,6 +23,9 @@
                     <option value="sampleWithExistingCustomer">Mit vorhandenem Kunden</option>
                     <option value="sampleNote">Mit Anmerkung und interner Notiz</option>
                     <option value="sampleDiscount">Mit Rabatt</option>
+					<option value="sampleWithMixedVATItem">Mit Mischsteuersätze</option>
+					<option value="sampleWithMixedVATItemOnlyItem">Mit Mischsteuersätze ohne Preis</option>
+					<option value="sampleWithMixedVATItemNothing">Mit Mischsteuersätze ohne Elemente</option>
                 </select>
 
                 <span>Aktion: </span>
@@ -31,6 +34,12 @@
                     <option value="options">Rechnungsoptionen</option>
                     <option value="preview">Rechnungsvorschau</option>
                     <option value="print">Ausdrucken</option>
+                </select>
+				
+				<span>Drucker: </span>
+				 <select class="printer">
+                    <option value="download-pdf-a4" selected>A4 PDF</option>
+                    <option value="download-pdf-bon">80mm PDF</option>
                 </select>
 
                 <button style="float: right;" onclick="exec()">Ausführen</button>

@@ -75,6 +75,7 @@
         var action = options.action || "overview";
         var data = options.data;
         var access_token = options.access_token;
+		var printer = options.printer;
 
         var str = JSON.stringify(data);
         var strb64 = btoa(str);
@@ -87,6 +88,9 @@
         if (action) {
             url += "&action=" + action;
         }
+		if(printer) {
+			url += "&printer=" + printer
+		}
 
         return url;
     }

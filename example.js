@@ -2,7 +2,6 @@ var serverurl = "https://kassa.asello.at";
 
 var editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
-// editor.getSession().setMode("ace/mode/javascript");
 editor.getSession().setMode("ace/mode/json");
 
 var sample =
@@ -85,8 +84,88 @@ var sampleDiscount =
 \n\
 }';
 
+var sampleWithMixedVATItem =
+'{\n\
+    "items": [{\n\
+        "name": "Produkt mit Mischsteuersatz",\n\
+        "quantity": 4,\n\
+        "type": "Bundle",\n\
+		"printItems": "ItemAndPrice",\n\
+        "children": [{\n\
+			"name": "Produkt mit 20%",\n\
+			"netprice": 10,\n\
+			"vatcode": "A",\n\
+			"quantity": 2\n\
+		},{\n\
+			"name": "Produkt mit 10%",\n\
+			"netprice": 10,\n\
+			"vatcode": "D",\n\
+			"quantity": 2\n\
+		},{\n\
+			"name": "Produkt mit 0%",\n\
+			"netprice": 10,\n\
+			"vatcode": "E",\n\
+			"quantity": 2\n\
+		}]\n\
+    }]\n\
+\n\
+}';
+var sampleWithMixedVATItemOnlyItem =
+'{\n\
+    "items": [{\n\
+        "name": "Produkt mit Mischsteuersatz",\n\
+        "quantity": 4,\n\
+        "type": "Bundle",\n\
+		"printItems": "OnlyItem",\n\
+        "children": [{\n\
+			"name": "Produkt mit 20%",\n\
+			"netprice": 10,\n\
+			"vatcode": "A",\n\
+			"quantity": 2\n\
+		},{\n\
+			"name": "Produkt mit 10%",\n\
+			"netprice": 10,\n\
+			"vatcode": "D",\n\
+			"quantity": 2\n\
+		},{\n\
+			"name": "Produkt mit 0%",\n\
+			"netprice": 10,\n\
+			"vatcode": "E",\n\
+			"quantity": 2\n\
+		}]\n\
+    }]\n\
+\n\
+}';
+var sampleWithMixedVATItemNothing =
+'{\n\
+    "items": [{\n\
+        "name": "Produkt mit Mischsteuersatz",\n\
+        "quantity": 4,\n\
+        "type": "Bundle",\n\
+		"printItems": "Nothing",\n\
+        "children": [{\n\
+			"name": "Produkt mit 20%",\n\
+			"netprice": 10,\n\
+			"vatcode": "A",\n\
+			"quantity": 2\n\
+		},{\n\
+			"name": "Produkt mit 10%",\n\
+			"netprice": 10,\n\
+			"vatcode": "D",\n\
+			"quantity": 2\n\
+		},{\n\
+			"name": "Produkt mit 0%",\n\
+			"netprice": 10,\n\
+			"vatcode": "E",\n\
+			"quantity": 2\n\
+		}]\n\
+    }]\n\
+\n\
+}';
+
 var select = document.querySelector(".main .left .left-header select.example");
 var actionSelect = document.querySelector(".main .left .left-header select.action");
+var printerSelect = document.querySelector(".main .left .left-header select.printer");
 var iframe = document.querySelector(".main .right iframe");
 var userInput = document.querySelector("#userName");
 var passwordInput = document.querySelector("#password");
@@ -103,6 +182,7 @@ if(window.localStorage != null) {
 			passwordInput.value = obj.password;
 			actionSelect.value = obj.action;
 			rnrtxt.value = obj.number;
+			printerSelect.value = obj.printer;
 		}
 		catch(err) {
 			
@@ -130,7 +210,8 @@ function opendetail() {
 		user: userInput.value,
 		password: passwordInput.value,
 		action: actionSelect.value,
-		number: rnrtxt.value
+		number: rnrtxt.value,
+		printer: printerSelect.value
 	}));
 	
 	var nr = rnrtxt.value;
@@ -151,7 +232,8 @@ function exec() {
 		user: userInput.value,
 		password: passwordInput.value,
 		action: actionSelect.value,
-		number: rnrtxt.value
+		number: rnrtxt.value,
+		printer: printerSelect.value
 	}));
 	
     var val = editor.getValue();    
@@ -171,6 +253,7 @@ function exec() {
         user: userInput.value,
         password: passwordInput.value,
         action: actionSelect.value,
+		printer: printerSelect.value,
         data: obj
     }, function(result) {
         alert("The invoice number is '" + result.number + "' with id " + result.id)
