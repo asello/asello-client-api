@@ -156,3 +156,14 @@ var sampleWithMixedVATItemNothing =
     }]\n\
 \n\
 }';
+var sampleWithSpecialCharacters =
+'{\n\
+    "items": [{\n\
+        "name": "Produkt 1 äöüÖÄÜß",\n\
+        "description": "Meine Beschreibung",\n\
+        "netprice": 20,\n\
+        "vatcode": "A",\n\
+        "quantity": 2\n\
+    }]\n\
+\n\
+}';
