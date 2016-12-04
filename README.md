@@ -81,7 +81,7 @@ api.cancel({
 ```
 
 
-    For more examples please visit `https://asello.at/entwickler-api/entwickler-playground/` or contact `support@asello.at`. 
+For more examples please visit https://asello.at/entwickler-api/entwickler-playground/ or contact support@asello.at. 
 
 # Start the sample
 
