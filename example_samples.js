@@ -9,6 +9,20 @@ var sample =
     }]\n\
 \n\
 }';
+
+
+var sampleRef =
+'{\n\
+    "items": [{\n\
+        "name": "Produkt 1",\n\
+        "description": "Meine Beschreibung",\n\
+        "netprice": 20,\n\
+        "vatcode": "A",\n\
+        "quantity": 2\n\
+    }],\n\
+    "reference": "R001"\n\
+\n\
+}';
 var sampleWithExistingProduct =
 '{\n\
     "items": [{\n\

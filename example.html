@@ -27,7 +27,10 @@
 					<option value="sampleWithMixedVATItemOnlyItem">Mit Mischsteuersätze ohne Preis</option>
 					<option value="sampleWithMixedVATItemNothing">Mit Mischsteuersätze ohne Elemente</option>
 					<option value="sampleWithSpecialCharacters">Beispiel mit Sonderzeichen</option>
+					<option value="sampleRef">Beispiel mit Referenz</option>
                 </select>
+
+                <br />
 
                 <span>Aktion: </span>
                 <select class="action">
@@ -36,6 +39,8 @@
                     <option value="preview">Rechnungsvorschau</option>
                     <option value="print">Ausdrucken</option>
                 </select>
+
+                <br />
 				
 				<span>Drucker: </span>
 				 <select class="printer">
@@ -43,17 +48,28 @@
                     <option value="download-pdf-bon">80mm PDF</option>
                 </select>
 
+                <br />
+
                 <button style="float: right;" onclick="exec()">Ausführen</button>
             </div>
             <div style="padding: 5px 0;">
                 <label>Benutzer <span style="font-size: 75%;">(optional)</span>: </label>
                 <input type="text" id="userName" />
 
+                <br />
+
                 <label>Passwort <span style="font-size: 75%;">(optional)</span>: </label>
                 <input type="password" id="password" />
 
+                <br />
+
                 <label>Server <span style="font-size: 75%;">(optional)</span>: </label>
                 <input type="text" id="serveraddress" />
+
+                <br />
+
+                <label>Automatisch Abmelden:</label>
+                <input type="checkbox" id="autologoff" />
             </div>
             <div class="editor" id="editor"></div>
 			

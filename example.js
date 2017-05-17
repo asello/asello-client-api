@@ -9,6 +9,7 @@ var iframe = document.querySelector(".main .right iframe");
 var userInput = document.querySelector("#userName");
 var passwordInput = document.querySelector("#password");
 var serverInput = document.querySelector("#serveraddress");
+var autologoffInput = document.querySelector('#autologoff');
 var rnrtxt = document.querySelector("#rnrtxt");
 var cancelcbx = document.querySelector('#cancelcbx');
 
@@ -29,6 +30,9 @@ if(window.localStorage != null) {
 			else {
 				serverInput.value = obj.server;
 			}
+
+			if(obj.autoLogoff == true)
+				autologoffInput.checked = true;
 			
 			actionSelect.value = obj.action;
 			rnrtxt.value = obj.number;
@@ -69,6 +73,7 @@ function saveCurrentSettings() {
 		user: userInput.value,
 		password: passwordInput.value,
 		server: serverInput.value,
+		autoLogoff: autologoffInput.checked,
 		action: actionSelect.value,
 		number: rnrtxt.value,
 		printer: printerSelect.value,
@@ -145,6 +150,7 @@ function exec() {
         password: passwordInput.value,
         action: actionSelect.value,
 		printer: printerSelect.value,
+		autoLogoff: autologoffInput.checked,
         data: obj
     }, function(result, err) {
 		if(err) {

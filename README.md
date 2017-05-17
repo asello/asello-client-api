@@ -38,8 +38,8 @@ api.create({
                 "vatcode": "A",
                 "quantity": 2
             }]
-
-        }
+        },
+        autoLogoff: false
     }, function(result) {
         // alert("The invoice number is '" + result.number + "'")
     });

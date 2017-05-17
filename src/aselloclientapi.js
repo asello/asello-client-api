@@ -84,6 +84,7 @@
         var data = options.data;
         var access_token = options.access_token;
 		var printer = options.printer;
+        var autologoff = options.autoLogoff || false;
 
         var str = JSON.stringify(data);
         var strb64 = b64EncodeUnicode(str);
@@ -97,8 +98,11 @@
             url += "&action=" + action;
         }
 		if(printer) {
-			url += "&printer=" + printer
+			url += "&printer=" + printer;
 		}
+        if(autologoff) {
+            url += "&autologoff=true";
+        }
 
         return url;
     }
@@ -106,6 +110,7 @@
         var action = "cancel";
         var data = options.data;
         var access_token = options.access_token;
+        var autologoff = options.autoLogoff || false;
 
         var str = JSON.stringify({
             invoiceid: options.invoiceid,
@@ -123,6 +128,9 @@
         }
         if (action) {
             url += "&action=" + action;
+        }
+        if(autologoff) {
+            url += "&autologoff=true";
         }
 
         return url;
