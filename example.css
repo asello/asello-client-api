@@ -3,6 +3,10 @@ html, body {
             margin: 0;
         }
 
+        body > .container {
+            height: calc(100% - 72px);
+        }
+
         .main {
             display: flex;
             -ms-flex-direction: row;
@@ -18,22 +22,23 @@ html, body {
                 padding: 5px;
             }
 
-                .main .left .left-header {
-                    flex: 0 0 auto;
-                    padding: 5px 0;
-                }
+            .main .left .tab-content {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
 
-                .main .left .editor {
-                    flex: 1 1 auto;
-                }
+            .main .left .tab-content > .active {
+                flex: 1 1 auto;
+                display: flex;
+                flex-direction: column;
+            }
 
-                .main .left .left-footer {
-                    flex: 0 0 auto;
-                }
+            .main .left .tab-content .editor,
+            .main .left .tab-content .flex-stretch {
+                flex: 1 1 auto;
+            }
 
-                    .main .left .left-footer button {
-                        float: right;
-                    }
 
             .main .right {
                 flex: 1 1 50%;

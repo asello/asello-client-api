@@ -2,16 +2,24 @@ var editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
 editor.getSession().setMode("ace/mode/json");
 
-var select = document.querySelector(".main .left .left-header select.example");
-var actionSelect = document.querySelector(".main .left .left-header select.action");
-var printerSelect = document.querySelector(".main .left .left-header select.printer");
+var select = document.querySelector(".main select.example");
+var actionSelect = document.querySelector(".main select.action");
+var printerSelect = document.querySelector(".main select.printer");
 var iframe = document.querySelector(".main .right iframe");
 var userInput = document.querySelector("#userName");
 var passwordInput = document.querySelector("#password");
 var serverInput = document.querySelector("#serveraddress");
+var identityaddress = document.querySelector('#identityaddress');
 var autologoffInput = document.querySelector('#autologoff');
 var rnrtxt = document.querySelector("#rnrtxt");
+var crnrtxt = document.querySelector('#crnrtxt');
 var cancelcbx = document.querySelector('#cancelcbx');
+var cashwamount = document.querySelector('#cashwamount');
+var cashwreason = document.querySelector('#cashwreason');
+var cashwprint = document.querySelector('#cashwprint');
+var cashdamount = document.querySelector('#cashdamount');
+var cashdreason = document.querySelector('#cashdreason');
+var cashdprint = document.querySelector('#cashdprint');
 
 // load last settings
 if(window.localStorage != null) {
@@ -30,14 +38,27 @@ if(window.localStorage != null) {
 			else {
 				serverInput.value = obj.server;
 			}
+			if(obj.identityaddress == null || obj.identityaddress == "") {
+				identityaddress.value = serverInput.value;
+			}
+			else {
+				identityaddress.value = obj.identityaddress;
+			}
 
 			if(obj.autoLogoff == true)
 				autologoffInput.checked = true;
 			
 			actionSelect.value = obj.action;
 			rnrtxt.value = obj.number;
+			crnrtxt.value = obj.number;
 			printerSelect.value = obj.printer;
 			cancelcbx.checked = obj.cancelprint;
+			cashwamount.value = obj.cashwamount || 0;
+			cashwreason.value = obj.cashwreason || "";
+			cashwprint.checked = obj.cashwprint;
+			cashdamount.value = obj.cashdamount || 0;
+			cashdreason.value = obj.cashdreason || "";
+			cashdprint.checked = obj.cashdprint;
 		}
 		catch(err) {
 			
@@ -65,26 +86,41 @@ function createAPI() {
 		serverurl = serverInput.value;
 	}
 	
-	return new AselloClientAPIClient("#aselloframe", serverurl)
+	var identityUrl = serverurl;
+
+	if(identityaddress.value != null && identityaddress.value != ""){
+		identityUrl = identityaddress.value;
+	}
+	
+	return new AselloClientAPIClient("#aselloframe", serverurl, identityUrl)
 }
 
-function saveCurrentSettings() {
+function saveCurrentSettings(nr) {
 	window.localStorage.setItem("demo-settings", JSON.stringify({
 		user: userInput.value,
 		password: passwordInput.value,
 		server: serverInput.value,
+		identityaddress: identityaddress.value,
 		autoLogoff: autologoffInput.checked,
 		action: actionSelect.value,
-		number: rnrtxt.value,
+		number: nr || rnrtxt.value,
 		printer: printerSelect.value,
-		cancelprint: cancelcbx.checked
+		cancelprint: cancelcbx.checked,
+		cashwamount: cashwamount.value,
+		cashwreason: cashwreason.value,
+		cashwprint: cashwprint.checked,
+		cashdamount: cashdamount.value,
+		cashdreason: cashdreason.value,
+		cashdprint: cashdprint.checked,
 	}));
 }
 
 function opendetail() {
-    saveCurrentSettings();
 	
 	var nr = rnrtxt.value;
+
+
+    saveCurrentSettings(nr);
 	
 	if(nr == null || nr == "")
 		return;
@@ -100,9 +136,10 @@ function opendetail() {
 }
 
 function cancel() {
-    saveCurrentSettings();
 
-    var nr = rnrtxt.value;
+    var nr = crnrtxt.value;
+
+    saveCurrentSettings(nr);
 	
 	if(nr == null || nr == "")
 		return;
@@ -153,6 +190,54 @@ function exec() {
 		autoLogoff: autologoffInput.checked,
         data: obj
     }, function(result, err) {
+		if(err) {
+			alert("Error " + err.message)
+			return;
+		}
+
+        alert("The invoice number is '" + result.number + "' with id " + result.id)
+    });
+}
+
+function cashwithdrawal() {
+	saveCurrentSettings();
+
+	var api = createAPI();
+
+	api.cashwithdrawal({
+		access_token: null,
+        user: userInput.value,
+        password: passwordInput.value,
+		printer: printerSelect.value,
+		print: cashwprint.checked,
+		amount: cashwamount.value,
+        reason: cashwreason.value,
+		autoLogoff: autologoffInput.checked
+	}, function(result, err) {
+		if(err) {
+			alert("Error " + err.message)
+			return;
+		}
+
+        alert("The invoice number is '" + result.number + "' with id " + result.id)
+    });
+}
+
+function cashdeposit() {
+	saveCurrentSettings();
+
+		var api = createAPI();
+
+	api.cashdeposit({
+		access_token: null,
+        user: userInput.value,
+        password: passwordInput.value,
+		printer: printerSelect.value,
+		print: cashdprint.checked,
+		amount: cashdamount.value,
+        reason: cashdreason.value,
+		autoLogoff: autologoffInput.checked
+	}, function(result, err) {
 		if(err) {
 			alert("Error " + err.message)
 			return;

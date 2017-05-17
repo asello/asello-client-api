@@ -2,6 +2,7 @@
 (function(window) {
     var _windowProxy;
     var _rootUrl;
+    var _identityUrl;
     var _iframequery;
 
     var getToken = function(user, password, callback) {
@@ -10,7 +11,7 @@
 
         var request = new XMLHttpRequest();
 
-        request.open("POST", _rootUrl + "/token");
+        request.open("POST", _identityUrl + "/token");
         request.addEventListener('load', function (event) {
             if (request.status >= 200 && request.status < 300 && request.responseText != null && request.responseText != "") {
                 var obj = JSON.parse(request.responseText);
@@ -38,10 +39,11 @@
         }));
     }
 	
-    function AselloClientAPIClient(iframequery, aselloUrl) {
+    function AselloClientAPIClient(iframequery, aselloUrl, identityUrl) {
         var _this = this;
 
         _rootUrl = aselloUrl || "https://kassa.asello.at";
+        _identityUrl = identityUrl || _rootUrl;
         _iframequery = iframequery;
 
         _windowProxy = new Porthole.WindowProxy(_rootUrl + '/proxy.html', '');
@@ -230,6 +232,88 @@
         else {
             cancelInternal(options, callback);
         }
+    }
+
+    var getTokenWithCallback = function(options, callback) {
+        if(!options.access_token && options.user && options.password) {
+            getToken(options.user, options.password, function(err, access_token) {
+                options.access_token = access_token;
+
+                 callback(options.access_token);
+            });
+        }
+        else {
+            callback(options.access_token);
+        }
+    };
+
+    AselloClientAPIClient.prototype.cashwithdrawal = function(options, callback) {
+        var _this = this;
+
+        if(!options)
+            return;
+
+        getTokenWithCallback(options, function(token) {
+            var action = "cashwithdrawal";
+            var access_token = options.access_token;
+            var autologoff = options.autoLogoff || false;
+
+            var str = JSON.stringify({
+                amount: options.amount,
+                reason: options.reason,
+                print: options.print,
+                printer: options.printer   
+            });
+            var strb64 = b64EncodeUnicode(str);
+
+            var url = _rootUrl + "/#/cashregister/report?eventdestination=" + encodeURIComponent(location.protocol + "//" + location.host) + "&data=" + strb64;
+
+            if (access_token) {
+                url += "&access_token=" + access_token;
+            }
+            if (action) {
+                url += "&action=" + action;
+            }
+            if(autologoff) {
+                url += "&autologoff=true";
+            }
+
+            return _this.updateIFrame(url, options, callback);
+        });
+    }
+    AselloClientAPIClient.prototype.cashdeposit = function(options, callback) {
+                var _this = this;
+
+        if(!options)
+            return;
+
+        getTokenWithCallback(options, function(token) {
+            var action = "cashdeposit";
+            var access_token = options.access_token;
+            var autologoff = options.autoLogoff || false;
+
+            var str = JSON.stringify({
+                amount: options.amount,
+                reason: options.reason,
+                print: options.print,
+                printer: options.printer   
+            });
+            var strb64 = b64EncodeUnicode(str);
+
+            var url = _rootUrl + "/#/cashregister/report?eventdestination=" + encodeURIComponent(location.protocol + "//" + location.host) + "&data=" + strb64;
+
+            if (access_token) {
+                url += "&access_token=" + access_token;
+            }
+            if (action) {
+                url += "&action=" + action;
+            }
+            if(autologoff) {
+                url += "&autologoff=true";
+            }
+
+            return _this.updateIFrame(url, options, callback);
+        });
     }
 
     window.AselloClientAPIClient = AselloClientAPIClient;
