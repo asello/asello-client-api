@@ -81,7 +81,7 @@ api.cancel({
 ```
 
 
-For more examples please visit https://asello.at/entwickler-api/entwickler-playground/ or contact support@asello.at. 
+For more examples please visit https://asello.at/entwickler-api/entwickler-playground/.
 
 # Start the sample
 
@@ -97,7 +97,7 @@ bower install
 npm start
 ```
 
-Start a webbrowser to `http://localhost:8080`
+Open a webbrowser to `http://localhost:8080`
 
 # Need Help?
 
