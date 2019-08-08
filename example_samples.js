@@ -23,6 +23,17 @@ var sampleRef =
     "reference": "R001"\n\
 \n\
 }';
+var sampleCHF =
+'{\n\
+    "items": [{\n\
+        "name": "Produkt 1",\n\
+        "description": "Meine Beschreibung",\n\
+        "netprice": 20,\n\
+        "vatcode": "M",\n\
+        "quantity": 2\n\
+    }]\n\
+\n\
+}';
 var sampleWithExistingProduct =
 '{\n\
     "items": [{\n\
@@ -98,6 +109,7 @@ var sampleWithMixedVATItem =
         "name": "Produkt mit Mischsteuersatz",\n\
         "quantity": 4,\n\
         "type": "Bundle",\n\
+        "vatcode": "A",\n\
 		"printItems": "ItemAndPrice",\n\
         "children": [{\n\
 			"name": "Produkt mit 20%",\n\
@@ -170,6 +182,27 @@ var sampleWithMixedVATItemNothing =
     }]\n\
 \n\
 }';
+var sampleWithMixedVATCHF =
+'{\n\
+    "items": [{\n\
+        "name": "Produkt mit Mischsteuersatz",\n\
+        "quantity": 4,\n\
+        "type": "Bundle",\n\
+		"printItems": "Nothing",\n\
+        "children": [{\n\
+			"name": "Produkt mit 20%",\n\
+			"netprice": 10,\n\
+			"vatcode": "A",\n\
+			"quantity": 2\n\
+		},{\n\
+			"name": "Produkt mit 10%",\n\
+			"netprice": 10,\n\
+			"vatcode": "D",\n\
+			"quantity": 2\n\
+		},\n\
+    }]\n\
+\n\
+}';
 var sampleWithSpecialCharacters =
 '{\n\
     "items": [{\n\
@@ -181,3 +214,27 @@ var sampleWithSpecialCharacters =
     }]\n\
 \n\
 }';
+
+var sampleComplex = 
+'{  \n\
+    "items":[  \n\
+       {  \n\
+          "name":"",\n\
+          "articlenumber":"1003",\n\
+          "netprice":7.1818,\n\
+          "vatcode":"D",\n\
+          "quantity":1\n\
+       },\n\
+       {  \n\
+          "name":"",\n\
+          "articlenumber":"2002",\n\
+          "netprice":2.6364,\n\
+          "vatcode":"D",\n\
+          "quantity":1\n\
+       }\n\
+    ],\n\
+    "payment_type":"Cash",\n\
+    "type":"Invoice",\n\
+    "annotation":"Barcelona",\n\
+    "reference":"E45T13614U2D6N726"\n\
+ }';

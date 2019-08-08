@@ -193,7 +193,12 @@ function exec() {
 		if(err) {
 			alert("Error " + err.message)
 			return;
-		}
+        }
+        
+        if(result.error) {
+            alert("Error " + result.error + " " + result.message)
+            return;
+        }
 
         alert("The invoice number is '" + result.number + "' with id " + result.id)
     });
